@@ -14,21 +14,14 @@ data class ResponseData(
     @SerializedName("value") var value: String = "",
     @SerializedName("size") val size: Int = 0,
     @SerializedName("id") val id: String = "",
-    @SerializedName("selectionId") val selectionId: String = "",
-    @SerializedName("visibilityDependency") val visibilityDependency: String = ""
+    @SerializedName("selectionId") val selectionId: String = ""
 )
 
 enum class ComponentType {
-    SCAFFOLD,
     TEXT,
-    APP_BAR,
-    IMAGE,
-    VERTICAL_LIST,
-    HORIZONTAL_LIST,
     ROW,
     COLUMN,
     RADIO_BUTTON,
     RADIO_GROUP,
-    BUTTON,
     UNKNOWN
 }

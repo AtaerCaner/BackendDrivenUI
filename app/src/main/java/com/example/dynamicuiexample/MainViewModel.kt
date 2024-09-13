@@ -18,13 +18,8 @@ class MainViewModel @Inject constructor() : ViewModel() {
 
     private val mandatoryFieldMapMutable = MutableLiveData(HashMap<String,Boolean>())
 
-    private val visibilityFieldMapMutable = MutableLiveData(HashMap<String,Boolean>())
-
     private val isStateValidMediator: MediatorLiveData<Boolean> = MediatorLiveData<Boolean>()
     val isStateValid: LiveData<Boolean> = isStateValidMediator
-
-    private val visibilityCheckMediator: MediatorLiveData<Boolean> = MediatorLiveData<Boolean>()
-    val visibilityCheck: LiveData<Boolean> = visibilityCheckMediator
 
     private val isStateValidObserver =
         Observer<Any?> {
@@ -38,11 +33,6 @@ class MainViewModel @Inject constructor() : ViewModel() {
     fun onRadioSelected(id: String,selectionId: String?) {
         selectedRadioMutable.value = id
         checkMandatoryFields(selectionId)
-        showSubChildIfPossible(id)
-    }
-
-    private fun showSubChildIfPossible(id: String) {
-
     }
 
     private fun checkMandatoryFields(selectionId: String?) {
@@ -64,13 +54,6 @@ class MainViewModel @Inject constructor() : ViewModel() {
         }
     }
 
-    fun setVisibilityDependency(value: ResponseData) {
-        if (!value.visibilityDependency.isNullOrEmpty()) {
-            val visibilityFieldMapTemp = visibilityFieldMapMutable.value!!
-            visibilityFieldMapTemp[value.visibilityDependency] = false
-            visibilityFieldMapMutable.value= visibilityFieldMapTemp
-        }
-    }
 
 
 }

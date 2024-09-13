@@ -70,23 +70,28 @@ class MainActivity : ComponentActivity() {
             Column(Modifier.fillMaxSize()) {
                 setView(data = body.data)
 
-                Button(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 10.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        disabledContainerColor = Color.Gray,
-                        disabledContentColor = Color.White,
-                        containerColor = Color.Blue,
-                        contentColor = Color.White
-                    ),
-                    enabled = isButtonEnabled,
-                    onClick = {
-
-                    }) {
-                    Text(text = "Save Button")
-                }
+                SaveButton(isButtonEnabled)
             }
+        }
+    }
+
+    @Composable
+    private fun SaveButton(isButtonEnabled: Boolean) {
+        Button(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 10.dp),
+            colors = ButtonDefaults.buttonColors(
+                disabledContainerColor = Color.Gray,
+                disabledContentColor = Color.White,
+                containerColor = Color.Blue,
+                contentColor = Color.White
+            ),
+            enabled = isButtonEnabled,
+            onClick = {
+
+            }) {
+            Text(text = "Save Button")
         }
     }
 }
@@ -101,7 +106,6 @@ private fun setView(data: ArrayList<ResponseData>) {
 @Composable
 private fun checkUiType(value: ResponseData, viewModel: MainViewModel = hiltViewModel()) {
     viewModel.setMandatoryFields(value)
-    viewModel.setVisibilityDependency(value)
     when (value.type) {
         ComponentType.COLUMN -> showColumn(value = value)
         ComponentType.ROW -> showRow(value = value)
@@ -151,10 +155,8 @@ fun showRadio(
 
 @Composable
 fun showRadioGroup(
-    value: ResponseData,
-    viewModel: MainViewModel
+    value: ResponseData
 ) {
-    viewModel.
     Column(
         modifier = Modifier.padding(start = 8.dp),
         horizontalAlignment = Alignment.CenterHorizontally
