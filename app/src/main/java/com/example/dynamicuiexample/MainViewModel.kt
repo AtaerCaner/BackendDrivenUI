@@ -1,6 +1,5 @@
 package com.example.dynamicuiexample
 
-import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
@@ -16,33 +15,43 @@ class MainViewModel @Inject constructor() : ViewModel() {
     private val selectedRadioMutable = MutableLiveData("")
     val selectedRadio: LiveData<String> = selectedRadioMutable
 
-    private val mandatoryFieldMapMutable = MutableLiveData(HashMap<String,Boolean>())
+    private val mandatoryFieldMapMutable = MutableLiveData(HashMap<String, Boolean>())
 
-    private val visibilityFieldMapMutable = MutableLiveData(HashMap<String,Boolean>())
+    private val visibilityFieldMapMutable = MutableLiveData(HashMap<String, Boolean>())
+    val visibilityFieldMap: LiveData<HashMap<String, Boolean>> = visibilityFieldMapMutable
 
     private val isStateValidMediator: MediatorLiveData<Boolean> = MediatorLiveData<Boolean>()
     val isStateValid: LiveData<Boolean> = isStateValidMediator
 
-    private val visibilityCheckMediator: MediatorLiveData<Boolean> = MediatorLiveData<Boolean>()
-    val visibilityCheck: LiveData<Boolean> = visibilityCheckMediator
 
     private val isStateValidObserver =
         Observer<Any?> {
             isStateValidMediator.value = mandatoryFieldMapMutable.value?.values?.all { it }
         }
 
+
     init {
         isStateValidMediator.apply { addSource(mandatoryFieldMapMutable, isStateValidObserver) }
     }
 
-    fun onRadioSelected(id: String,selectionId: String?) {
+    fun onRadioSelected(id: String, selectionId: String?) {
         selectedRadioMutable.value = id
         checkMandatoryFields(selectionId)
-        showSubChildIfPossible(id)
+        adjustVisibility(id)
     }
 
-    private fun showSubChildIfPossible(id: String) {
-
+    private fun adjustVisibility(id: String) {
+        val visibilityMap = visibilityFieldMapMutable.value!!
+        if (visibilityMap.contains(id)) {
+            visibilityMap[id] = true
+            visibilityFieldMapMutable.postValue(visibilityMap)
+        } else {
+            val tempMap = hashMapOf<String, Boolean>()
+            visibilityMap.keys.forEach {
+                tempMap[it] = false
+            }
+            visibilityFieldMapMutable.postValue(tempMap)
+        }
     }
 
     private fun checkMandatoryFields(selectionId: String?) {
@@ -65,10 +74,10 @@ class MainViewModel @Inject constructor() : ViewModel() {
     }
 
     fun setVisibilityDependency(value: ResponseData) {
-        if (!value.visibilityDependency.isNullOrEmpty()) {
-            val visibilityFieldMapTemp = visibilityFieldMapMutable.value!!
-            visibilityFieldMapTemp[value.visibilityDependency] = false
-            visibilityFieldMapMutable.value= visibilityFieldMapTemp
+        val visibilityMap = visibilityFieldMapMutable.value!!
+        if (!value.visibilityDependency.isNullOrEmpty() && !visibilityMap.contains(value.visibilityDependency)) {
+            visibilityMap[value.visibilityDependency] = false
+            visibilityFieldMapMutable.value = visibilityMap
         }
     }
 

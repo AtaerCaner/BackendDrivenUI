@@ -102,13 +102,18 @@ private fun setView(data: ArrayList<ResponseData>) {
 private fun checkUiType(value: ResponseData, viewModel: MainViewModel = hiltViewModel()) {
     viewModel.setMandatoryFields(value)
     viewModel.setVisibilityDependency(value)
-    when (value.type) {
-        ComponentType.COLUMN -> showColumn(value = value)
-        ComponentType.ROW -> showRow(value = value)
-        ComponentType.TEXT -> showText(value = value)
-        ComponentType.RADIO_BUTTON -> showRadio(value = value, viewModel = viewModel)
-        ComponentType.RADIO_GROUP -> showRadioGroup(value = value)
-        else -> Spacer(modifier = Modifier.height(1.dp))
+
+    val visibleMap by viewModel.visibilityFieldMap.observeAsState(mapOf())
+    val isVisible = !visibleMap.contains(value.visibilityDependency) || visibleMap[value.visibilityDependency]!!
+    if (isVisible) {
+        when (value.type) {
+            ComponentType.COLUMN -> showColumn(value = value)
+            ComponentType.ROW -> showRow(value = value)
+            ComponentType.TEXT -> showText(value = value)
+            ComponentType.RADIO_BUTTON -> showRadio(value = value, viewModel = viewModel)
+            ComponentType.RADIO_GROUP -> showRadioGroup(value = value, viewModel = viewModel)
+            else -> Spacer(modifier = Modifier.height(1.dp))
+        }
     }
 }
 
@@ -142,10 +147,12 @@ fun showRadio(
 ) {
     val selectedRadioId by viewModel.selectedRadio.observeAsState(initial = "")
 
+
     RadioButton(selected = value.id == selectedRadioId,
         onClick = {
             viewModel.onRadioSelected(id = value.id, selectionId = value.selectionId)
         })
+
 
 }
 
@@ -154,7 +161,7 @@ fun showRadioGroup(
     value: ResponseData,
     viewModel: MainViewModel
 ) {
-    viewModel.
+
     Column(
         modifier = Modifier.padding(start = 8.dp),
         horizontalAlignment = Alignment.CenterHorizontally

@@ -1,0 +1,102 @@
+{
+    "data":
+    [
+        {
+            "type": "RADIO_GROUP",
+            "selectionId": "500",
+            "children":
+            [
+                {
+                    "type": "TEXT",
+                    "value": "Dynamic Text Example"
+                },
+                {
+                    "type": "ROW",
+                    "children":
+                    [
+                        {
+                            "id": "100",
+                            "selectionId": "500",
+                            "type": "RADIO_BUTTON",
+                            "children":
+                            [
+                                {
+                                    "type": "RADIO_GROUP",
+                                    "selectionId": "500",
+                                    "subOptionOf": "100",
+                                    "children":
+                                    [
+                                        {
+                                            "type": "ROW",
+                                            "children":
+                                            [
+                                                {
+                                                    "id": "103",
+                                                    "selectionId": "500",
+                                                    "type": "RADIO_BUTTON"
+                                                },
+                                                {
+                                                    "type": "TEXT",
+                                                    "value": "Sub-Radio 1"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "ROW",
+                                            "children":
+                                            [
+                                                {
+                                                    "id": "104",
+                                                    "selectionId": "500",
+                                                    "type": "RADIO_BUTTON"
+                                                },
+                                                {
+                                                    "type": "TEXT",
+                                                    "value": "Sub-Radio 2"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "type": "TEXT",
+                            "value": "Radio 1"
+                        }
+                    ]
+                },
+                {
+                    "type": "ROW",
+                    "children":
+                    [
+                        {
+                            "id": "101",
+                            "selectionId": "500",
+                            "type": "RADIO_BUTTON"
+                        },
+                        {
+                            "type": "TEXT",
+                            "value": "Radio 2"
+                        }
+                    ]
+                },
+                {
+                    "type": "ROW",
+                    "children":
+                    [
+                        {
+                            "id": "102",
+                            "selectionId": "500",
+                            "type": "RADIO_BUTTON"
+                        },
+                        {
+                            "type": "TEXT",
+                            "value": "Radio 3"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
