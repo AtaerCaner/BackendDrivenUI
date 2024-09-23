@@ -6,6 +6,6 @@ import retrofit2.Call
 import retrofit2.http.GET
 
 interface ApiInterface {
-    @GET("71ce1c6c-8e09-423e-9dd2-ec44f84f6848")
+    @GET("d9d79c54-1549-4741-b707-31249c1f5632")
     fun getExampleData(): Call<RemoteModel>
 }
