@@ -111,7 +111,7 @@ private fun checkUiType(value: ResponseData, viewModel: MainViewModel = hiltView
             ComponentType.ROW -> showRow(value = value)
             ComponentType.TEXT -> showText(value = value)
             ComponentType.RADIO_BUTTON -> showRadio(value = value, viewModel = viewModel)
-            ComponentType.RADIO_GROUP -> showRadioGroup(value = value, viewModel = viewModel)
+            ComponentType.RADIO_GROUP -> showRadioGroup(value = value)
             else -> Spacer(modifier = Modifier.height(1.dp))
         }
     }
@@ -158,8 +158,7 @@ fun showRadio(
 
 @Composable
 fun showRadioGroup(
-    value: ResponseData,
-    viewModel: MainViewModel
+    value: ResponseData
 ) {
 
     Column(
@@ -167,22 +166,5 @@ fun showRadioGroup(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         setView(data = value.children)
-    }
-}
-
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    DynamicUIExampleTheme {
-        Greeting("Android")
     }
 }
